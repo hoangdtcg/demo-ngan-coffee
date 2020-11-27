@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Ngẫn Coffee</title>
+    <script src="Drink.js"></script>
+    <script src="Menu.js"></script>
+    <script src="Data.js"></script>
+</head>
+<style>
+    img{
+        width: 80px;
+    }
+    #menu{
+        margin-top: 20px;
+        width: 100%;
+    }
+    td button{
+        width: 100%;
+        height: 100%;
+    }
+    td{
+        padding: 0;
+    }
+</style>
+<body>
+<form id="add-drink">
+    <fieldset>
+        <legend>Thêm đồ uống</legend>
+        <input type="text" id="drink-name" placeholder="Tên đồ uống...">
+        <input type="number" id="drink-price" placeholder="VNĐ">
+        <input type="text" id="drink-category" placeholder="Loại đồ uống...">
+        <input type="text" id="drink-desc" placeholder="Mô tả...">
+        <input type="text" id="drink-img" placeholder="Ảnh đồ uống">
+        <button type="button" onclick="addDrink()">Thêm</button>
+        <button type="button" onclick="demoData()">Demo</button>
+    </fieldset>
+</form>
+
+<table id="menu" border="1px"></table>
+
+<script>
+    let menu = new Menu();
+    menu.drinks = loadData();
+    display();
+
+    function addDrink() {
+        let name = getInput('drink-name');
+        let price = getInput('drink-price');
+        let category = getInput('drink-category');
+        let desc = getInput('drink-desc');
+        let img = getInput('drink-img');
+
+        let drink = new Drink(name,price,img,desc,category);
+        menu.add(drink);
+        display();
+    }
+
+    function delDrink(index) {
+        menu.del(admin);
+        display();
+    }
+    function display() {
+        let str = menu.display();
+        document.getElementById('menu').innerHTML = str;
+        saveData(menu.drinks);
+    }
+
+    function getInput(id) {
+        return document.getElementById(id).value;
+    }
+    function setInput(id,value) {
+        document.getElementById(id).value = value;
+    }
+
+    function demoData() {
+        setInput('drink-name','Cafe Sữa');
+        setInput('drink-price','20000');
+        setInput('drink-category','Cafe');
+        setInput('drink-desc','Khá là ngon');
+        setInput('drink-img','https://product.hstatic.net/1000373334/product/ca_phe_sua_5c10f27a838f443e8a63c1c719715d64_master.jpg');
+    }
+</script>
+</body>
+</html>
